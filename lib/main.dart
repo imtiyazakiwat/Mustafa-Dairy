@@ -1,13 +1,11 @@
-
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(MaterialApp(
-    debugShowCheckedModeBanner: false, // Setting debugShowCheckedModeBanner to false
+    debugShowCheckedModeBanner: false,
     home: CalculationPage(),
   ));
 }
-
 
 class CalculationPage extends StatefulWidget {
   @override
@@ -18,7 +16,8 @@ class _CalculationPageState extends State<CalculationPage> {
   double litres = 1;
   TextEditingController snfController = TextEditingController();
   TextEditingController fatController = TextEditingController();
-  TextEditingController farmerNameController = TextEditingController(); // Added controller for farmer name
+  TextEditingController farmerNameController = TextEditingController();
+  TextEditingController balanceController = TextEditingController(); // Added balance controller
   DateTime? selectedDate;
   List<DateTime> previousDates = [];
   List<double> morningLitres = List.filled(7, 0.0);
@@ -61,7 +60,7 @@ class _CalculationPageState extends State<CalculationPage> {
             SizedBox(height: 10),
             Row(
               children: [
-                Text('Farmer Name: '), // Added farmer name label
+                Text('Farmer Name: '),
                 Expanded(
                   child: TextField(
                     controller: farmerNameController,
@@ -79,38 +78,48 @@ class _CalculationPageState extends State<CalculationPage> {
                   Row(
                     children: [
                       Expanded(
-                        child: _buildSection("Morning", morningLitres, morningSNF, morningFat),
+                        child: _buildSection("Morning", morningLitres, morningSNF, morningFat, totalMorningLitres, totalMorningAmount),
                       ),
                       SizedBox(width: 20),
                       Expanded(
-                        child: _buildSection("Evening", eveningLitres, eveningSNF, eveningFat),
+                        child: _buildSection("Evening", eveningLitres, eveningSNF, eveningFat, totalEveningLitres, totalEveningAmount),
                       ),
                     ],
                   ),
                   SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Total Litres: $totalLitres',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(width: 20),
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Text('Balance: '),
+                            Expanded(
+                              child: TextField(
+                                controller: balanceController,
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  hintText: 'Balance',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 20),
+                      Text(
+                        'Total Amount: ${totalAmount.toStringAsFixed(2)}', // Formatting total amount to two decimal places
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Total Litres: $totalLitres',
-                  style: TextStyle(fontSize: 18),
-                ),
-                Text(
-                  'Total Amount: $totalAmount',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ],
             ),
           ],
         ),
@@ -118,12 +127,12 @@ class _CalculationPageState extends State<CalculationPage> {
     );
   }
 
-  Widget _buildSection(String title, List<double> litres, List<double> snf, List<double> fat) {
+  Widget _buildSection(String title, List<double> litres, List<double> snf, List<double> fat, double totalLitres, double totalAmount) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '$title Section:',
+          '$title',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 10),
@@ -131,20 +140,18 @@ class _CalculationPageState extends State<CalculationPage> {
           border: TableBorder.all(),
           children: [
             TableRow(children: [
-              TableCell(child: Center(child: Text(title == 'Morning' ? 'Date' : ''))),
+              TableCell(child: Center(child: Text(title == 'Morning' ? 'Date' : 'Date'))),
               TableCell(child: Center(child: Text('Litres'))),
-              TableCell(child: Center(child: Text('SNF'))),
               TableCell(child: Center(child: Text('Fat'))),
+              TableCell(child: Center(child: Text('SNF'))),
               TableCell(child: Center(child: Text('Total Amount'))),
             ]),
             for (int i = 0; i < 7; i++)
               TableRow(children: [
                 TableCell(
-                  child: title == 'Morning'
-                      ? Center(
+                  child: Center(
                     child: Text(previousDates.length > i ? '${previousDates[i].day}/${previousDates[i].month}' : ''),
-                  )
-                      : SizedBox(),
+                  ),
                 ),
                 TableCell(
                   child: TextField(
@@ -159,7 +166,7 @@ class _CalculationPageState extends State<CalculationPage> {
                   child: TextField(
                     keyboardType: TextInputType.number,
                     onChanged: (value) {
-                      snf[i] = double.tryParse(value) ?? 0.0;
+                      fat[i] = double.tryParse(value) ?? 0.0;
                       calculateTotals();
                     },
                   ),
@@ -168,14 +175,14 @@ class _CalculationPageState extends State<CalculationPage> {
                   child: TextField(
                     keyboardType: TextInputType.number,
                     onChanged: (value) {
-                      fat[i] = double.tryParse(value) ?? 0.0;
+                      snf[i] = double.tryParse(value) ?? 0.0;
                       calculateTotals();
                     },
                   ),
                 ),
                 TableCell(
                   child: Center(
-                    child: Text((litres[i] * calcAmount(snf[i], fat[i])).toStringAsFixed(2)),
+                    child: Text((litres[i] * calcAmount(fat[i], snf[i])).toStringAsFixed(2)),
                   ),
                 ),
               ]),
@@ -188,10 +195,10 @@ class _CalculationPageState extends State<CalculationPage> {
             ]),
             TableRow(children: [
               TableCell(child: Center(child: Text('Total'))),
-              TableCell(child: Center(child: Text(totalMorningLitres.toStringAsFixed(2)))),
+              TableCell(child: Center(child: Text(totalLitres.toStringAsFixed(2)))),
               TableCell(child: SizedBox()),
               TableCell(child: SizedBox()),
-              TableCell(child: Center(child: Text(title == 'Morning' ? totalMorningAmount.toStringAsFixed(2) : totalEveningAmount.toStringAsFixed(2)))),
+              TableCell(child: Center(child: Text(totalAmount.toStringAsFixed(2)))),
             ]),
           ],
         ),
@@ -232,15 +239,15 @@ class _CalculationPageState extends State<CalculationPage> {
       totalMorningAmount = 0;
       totalEveningAmount = 0;
       for (int i = 0; i < 7; i++) {
-        totalMorningAmount += morningLitres[i] * calcAmount(morningSNF[i], morningFat[i]);
-        totalEveningAmount += eveningLitres[i] * calcAmount(eveningSNF[i], eveningFat[i]);
+        totalMorningAmount += morningLitres[i] * calcAmount(morningFat[i], morningSNF[i]);
+        totalEveningAmount += eveningLitres[i] * calcAmount(eveningFat[i], eveningSNF[i]);
       }
 
       totalAmount = totalMorningAmount + totalEveningAmount;
     });
   }
 
-  double calcAmount(double snf, double fat) {
+  double calcAmount(double fat, double snf) {
     double s = 9.0;
     double sp = (snf - s) * 10;
 
