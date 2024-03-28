@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -89,30 +90,10 @@ class _CalculationPageState extends State<CalculationPage> {
                   SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Total Morning Litres: $totalMorningLitres',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      Text(
-                        'Total Morning Amount: $totalMorningAmount',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ],
                   ),
                   SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Total Evening Litres: $totalEveningLitres',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      Text(
-                        'Total Evening Amount: $totalEveningAmount',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ],
                   ),
                 ],
               ),
