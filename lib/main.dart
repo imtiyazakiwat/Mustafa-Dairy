@@ -39,12 +39,12 @@ class _CalculationPageState extends State<CalculationPage> {
       appBar: AppBar(
         title: Text('Calculation Page'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
               children: [
                 Text('Bill Date: '),
                 TextButton(
@@ -57,8 +57,10 @@ class _CalculationPageState extends State<CalculationPage> {
                 ),
               ],
             ),
-            SizedBox(height: 10),
-            Row(
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
               children: [
                 Text('Farmer Name: '),
                 Expanded(
@@ -71,11 +73,13 @@ class _CalculationPageState extends State<CalculationPage> {
                 ),
               ],
             ),
-            SizedBox(height: 10),
-            Expanded(
-              child: ListView(
-                children: [
-                  Row(
+          ),
+          Expanded(
+            child: ListView(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
                     children: [
                       Expanded(
                         child: _buildSection("Morning", morningLitres, morningSNF, morningFat, totalMorningLitres, totalMorningAmount),
@@ -86,8 +90,10 @@ class _CalculationPageState extends State<CalculationPage> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
-                  Row(
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
@@ -118,11 +124,11 @@ class _CalculationPageState extends State<CalculationPage> {
                       ),
                     ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
