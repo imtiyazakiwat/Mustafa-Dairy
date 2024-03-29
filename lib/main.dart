@@ -35,6 +35,9 @@ class _CalculationPageState extends State<CalculationPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final isDesktop = screenSize.width > 600; // Define desktop as width > 600 pixels
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Calculation Page'),
@@ -84,6 +87,12 @@ class _CalculationPageState extends State<CalculationPage> {
                       Expanded(
                         child: _buildSection("Morning", morningLitres, morningSNF, morningFat, totalMorningLitres, totalMorningAmount),
                       ),
+                      if (!isDesktop) SizedBox(height: 20),
+                      if (!isDesktop) SizedBox(height: 20),
+                      if (!isDesktop) SizedBox(height: 20),
+                      if (!isDesktop) SizedBox(height: 20),
+                      if (!isDesktop) SizedBox(height: 20),
+                      if (!isDesktop) SizedBox(height: 20),
                       SizedBox(width: 20),
                       Expanded(
                         child: _buildSection("Evening", eveningLitres, eveningSNF, eveningFat, totalEveningLitres, totalEveningAmount),
@@ -93,34 +102,99 @@ class _CalculationPageState extends State<CalculationPage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Row(
+                  child: isDesktop
+                      ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Total Litres: $totalLitres',
+                        'Total Litres: ${totalLitres.toStringAsFixed(2)}',
                         style: TextStyle(fontSize: 18),
                       ),
                       SizedBox(width: 20),
+                      Text(
+                        'Total Amount: ${totalAmount.toStringAsFixed(2)}',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(width: 20),
+                      Text(
+                        'Balance: ',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(width: 10),
                       Expanded(
-                        child: Row(
-                          children: [
-                            Text('Balance: '),
-                            Expanded(
-                              child: TextField(
-                                controller: balanceController,
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  hintText: 'Balance',
-                                ),
-                              ),
-                            ),
-                          ],
+                        child: TextField(
+                          controller: balanceController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            hintText: 'Balance',
+                          ),
                         ),
                       ),
                       SizedBox(width: 20),
                       Text(
-                        'Total Amount: ${totalAmount.toStringAsFixed(2)}', // Formatting total amount to two decimal places
+                        'Signature: ',
                         style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: 'Signature',
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                      : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 20),
+                      Row(
+                        children: [
+                          Text(
+                            'Total Litres: ${totalLitres.toStringAsFixed(2)}',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Text(
+                            'Total Amount: ${totalAmount.toStringAsFixed(2)}',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Text('Balance: '),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: TextField(
+                              controller: balanceController,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                hintText: 'Balance',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Text('Signature: '),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: TextField(
+                              decoration: InputDecoration(
+                                hintText: 'Signature',
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

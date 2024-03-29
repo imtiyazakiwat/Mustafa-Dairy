@@ -1,5 +1,5 @@
-name: mustafa_dairy
-description: "A new Flutter project."
+name: Mustafa Dairy
+description: "A flutter web app to reduce the complex milk dairy calculations."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
