@@ -257,7 +257,7 @@ class _CalculationPageState extends State<CalculationPage> {
     double fp = (fat - f) * 10;
     double fa = fat <= 6.5 ? fp * 0.50 : fp * 0.60;
 
-    double amount = sa + fa + 52;
+    double amount = sa + fa + 52.50;
     return amount;
   }
 }

@@ -30,8 +30,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  printing: ^5.5.5
-  pdf: ^3.6.0
+  printing: ^5.5.8
+  pdf: ^3.10.8
+  path_provider: ^2.0.1 # Add this line
 
 
 
