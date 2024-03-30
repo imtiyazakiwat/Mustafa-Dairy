@@ -17,7 +17,7 @@ class _CalculationPageState extends State<CalculationPage> {
   TextEditingController snfController = TextEditingController();
   TextEditingController fatController = TextEditingController();
   TextEditingController farmerNameController = TextEditingController();
-  TextEditingController balanceController = TextEditingController(); // Added balance controller
+  TextEditingController balanceController = TextEditingController();
   DateTime? selectedDate;
   List<DateTime> previousDates = [];
   List<double> morningLitres = List.filled(7, 0.0);
@@ -32,16 +32,27 @@ class _CalculationPageState extends State<CalculationPage> {
   double totalMorningAmount = 0;
   double totalEveningAmount = 0;
   double totalAmount = 0;
-  double dateFontSize = 24.0;
 
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-    final isDesktop = screenSize.width > 600; // Define desktop as width > 600 pixels
+    final isDesktop = screenSize.width > 600;
 
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text('Mulla Dairy', style: TextStyle(fontSize: 48),)), // Triple the size of the title
+        title: Center(
+          child: Padding(
+            padding: EdgeInsets.only(bottom: 10),
+            child: Text(
+              'Mulla Dairy',
+              style: TextStyle(
+                fontSize: 40,
+                color: Colors.blue,
+                fontFamily: 'Pacifico',
+              ),
+            ),
+          ),
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,10 +66,15 @@ class _CalculationPageState extends State<CalculationPage> {
                   onPressed: () {
                     _selectDate(context);
                   },
-                  child: Text(selectedDate == null
-                      ? 'Select Date'
-                      : '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}',
-                      style: TextStyle(fontSize: dateFontSize)), // Use variable for font size
+                  child: Text(
+                    selectedDate == null
+                        ? 'Select Date'
+                        : '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}',
+                    style: TextStyle(
+                      fontSize: selectedDate != null ? 24 : 16,
+                      color: selectedDate != null ? Colors.red : null,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -74,7 +90,9 @@ class _CalculationPageState extends State<CalculationPage> {
                     decoration: InputDecoration(
                       hintText: 'Enter farmer name',
                     ),
-                    style: TextStyle(fontSize: 24), // Double the size of the farmer name text
+                    style: TextStyle(
+                      fontSize: farmerNameController.text.isNotEmpty ? 24 : 16,
+                    ),
                   ),
                 ),
               ],
@@ -106,45 +124,42 @@ class _CalculationPageState extends State<CalculationPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: isDesktop
-                      ? Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Total Litres: ${totalLitres.toStringAsFixed(2)}',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      SizedBox(width: 20),
-                      Text(
-                        'Total Amount: ${totalAmount.toStringAsFixed(2)}',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      SizedBox(width: 20),
-                      Text(
-                        'Balance: ',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: TextField(
-                          controller: balanceController,
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            hintText: 'Balance',
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Total Litres: ${totalLitres.toStringAsFixed(2)}',
+                            style: TextStyle(fontSize: 18),
                           ),
-                        ),
-                      ),
-                      SizedBox(width: 20),
-                      Text(
-                        'Signature: ',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            hintText: 'Signature',
+                          SizedBox(width: 20),
+                          Text(
+                            'Total Amount: ${totalAmount.toStringAsFixed(2)}',
+                            style: TextStyle(fontSize: 18),
                           ),
-                        ),
+                          SizedBox(width: 20),
+                          Text(
+                            'Balance: ',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: TextField(
+                              controller: balanceController,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                hintText: 'Balance',
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 20),
+                          Text(
+                            'Signature:                                  ',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ],
                       ),
                     ],
                   )
@@ -172,7 +187,10 @@ class _CalculationPageState extends State<CalculationPage> {
                       SizedBox(height: 10),
                       Row(
                         children: [
-                          Text('Balance: '),
+                          Text(
+                            'Balance: ',
+                            style: TextStyle(fontSize: 18),
+                          ),
                           SizedBox(width: 10),
                           Expanded(
                             child: TextField(
@@ -188,20 +206,49 @@ class _CalculationPageState extends State<CalculationPage> {
                       SizedBox(height: 10),
                       Row(
                         children: [
-                          Text('Signature: '),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: TextField(
-                              decoration: InputDecoration(
-                                hintText: 'Signature',
-                              ),
-                            ),
+                          Text(
+                            'Signature: ',
+                            style: TextStyle(fontSize: 18),
                           ),
                         ],
                       ),
                     ],
                   ),
                 ),
+                SizedBox(height: 20),
+                Divider(height: 20, thickness: 2),
+                SizedBox(height: 20),
+                const Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly, // or MainAxisAlignment.spaceAround
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10.0),
+                        child: Text(
+                          'Owner Name: Nabisab Mulla',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Pacifico',
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        child: Text(
+                          'Mob No: 7259610916',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Pacifico',
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+
+
               ],
             ),
           ),
@@ -216,7 +263,7 @@ class _CalculationPageState extends State<CalculationPage> {
       children: [
         Text(
           '$title',
-          style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold), // Triple the size of the title
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 10),
         Table(
@@ -300,7 +347,6 @@ class _CalculationPageState extends State<CalculationPage> {
       setState(() {
         selectedDate = picked;
         _generatePreviousDates();
-        dateFontSize = 48.0; // Double the font size after selecting the date
       });
     }
   }
