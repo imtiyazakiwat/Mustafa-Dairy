@@ -40,7 +40,7 @@ class _CalculationPageState extends State<CalculationPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text('Mulla Dairy', style: TextStyle(fontSize: 36))), // Increased title size by 3 times
+        title: Center(child: Text('Mulla Dairy')),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,7 +49,7 @@ class _CalculationPageState extends State<CalculationPage> {
             padding: const EdgeInsets.all(16.0),
             child: Row(
               children: [
-                Text('Bill Date: ', style: TextStyle(fontSize: 24)), // Doubled the size of the text
+                Text('Bill Date: '),
                 TextButton(
                   onPressed: () {
                     _selectDate(context);
@@ -57,7 +57,7 @@ class _CalculationPageState extends State<CalculationPage> {
                   child: Text(selectedDate == null
                       ? 'Select Date'
                       : '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}',
-                      style: TextStyle(fontSize: 24)), // Doubled the size of the text
+                      style: TextStyle(fontSize: 24)), // Double the size of the selected date
                 ),
               ],
             ),
@@ -66,13 +66,14 @@ class _CalculationPageState extends State<CalculationPage> {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
               children: [
-                Text('Farmer Name: ', style: TextStyle(fontSize: 24)), // Doubled the size of the text
+                Text('Farmer Name: '),
                 Expanded(
                   child: TextField(
                     controller: farmerNameController,
                     decoration: InputDecoration(
                       hintText: 'Enter farmer name',
                     ),
+                    style: TextStyle(fontSize: 24), // Double the size of the farmer name text
                   ),
                 ),
               ],
@@ -214,7 +215,7 @@ class _CalculationPageState extends State<CalculationPage> {
       children: [
         Text(
           '$title',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold), // Increased font size by 3 times
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 10),
         Table(
