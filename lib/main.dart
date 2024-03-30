@@ -32,6 +32,7 @@ class _CalculationPageState extends State<CalculationPage> {
   double totalMorningAmount = 0;
   double totalEveningAmount = 0;
   double totalAmount = 0;
+  double dateFontSize = 24.0;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class _CalculationPageState extends State<CalculationPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text('Mulla Dairy')),
+        title: Center(child: Text('Mulla Dairy', style: TextStyle(fontSize: 48),)), // Triple the size of the title
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,7 +58,7 @@ class _CalculationPageState extends State<CalculationPage> {
                   child: Text(selectedDate == null
                       ? 'Select Date'
                       : '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}',
-                      style: TextStyle(fontSize: 24)), // Double the size of the selected date
+                      style: TextStyle(fontSize: dateFontSize)), // Use variable for font size
                 ),
               ],
             ),
@@ -215,7 +216,7 @@ class _CalculationPageState extends State<CalculationPage> {
       children: [
         Text(
           '$title',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold), // Triple the size of the title
         ),
         SizedBox(height: 10),
         Table(
@@ -299,6 +300,7 @@ class _CalculationPageState extends State<CalculationPage> {
       setState(() {
         selectedDate = picked;
         _generatePreviousDates();
+        dateFontSize = 48.0; // Double the font size after selecting the date
       });
     }
   }
