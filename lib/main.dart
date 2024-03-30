@@ -17,7 +17,7 @@ class _CalculationPageState extends State<CalculationPage> {
   TextEditingController snfController = TextEditingController();
   TextEditingController fatController = TextEditingController();
   TextEditingController farmerNameController = TextEditingController();
-  TextEditingController balanceController = TextEditingController();
+  TextEditingController balanceController = TextEditingController(); // Added balance controller
   DateTime? selectedDate;
   List<DateTime> previousDates = [];
   List<double> morningLitres = List.filled(7, 0.0);
@@ -36,23 +36,11 @@ class _CalculationPageState extends State<CalculationPage> {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-    final isDesktop = screenSize.width > 600;
+    final isDesktop = screenSize.width > 600; // Define desktop as width > 600 pixels
 
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Padding(
-            padding: EdgeInsets.only(bottom: 10),
-            child: Text(
-              'Mulla Dairy',
-              style: TextStyle(
-                fontSize: 40,
-                color: Colors.blue,
-                fontFamily: 'Pacifico',
-              ),
-            ),
-          ),
-        ),
+        title: Text('Calculation Page'),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,15 +54,9 @@ class _CalculationPageState extends State<CalculationPage> {
                   onPressed: () {
                     _selectDate(context);
                   },
-                  child: Text(
-                    selectedDate == null
-                        ? 'Select Date'
-                        : '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}',
-                    style: TextStyle(
-                      fontSize: selectedDate != null ? 24 : 16,
-                      color: selectedDate != null ? Colors.red : null,
-                    ),
-                  ),
+                  child: Text(selectedDate == null
+                      ? 'Select Date'
+                      : '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}'),
                 ),
               ],
             ),
@@ -89,9 +71,6 @@ class _CalculationPageState extends State<CalculationPage> {
                     controller: farmerNameController,
                     decoration: InputDecoration(
                       hintText: 'Enter farmer name',
-                    ),
-                    style: TextStyle(
-                      fontSize: farmerNameController.text.isNotEmpty ? 24 : 16,
                     ),
                   ),
                 ),
@@ -124,42 +103,45 @@ class _CalculationPageState extends State<CalculationPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: isDesktop
-                      ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                      ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Total Litres: ${totalLitres.toStringAsFixed(2)}',
-                            style: TextStyle(fontSize: 18),
+                      Text(
+                        'Total Litres: ${totalLitres.toStringAsFixed(2)}',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(width: 20),
+                      Text(
+                        'Total Amount: ${totalAmount.toStringAsFixed(2)}',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(width: 20),
+                      Text(
+                        'Balance: ',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: TextField(
+                          controller: balanceController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            hintText: 'Balance',
                           ),
-                          SizedBox(width: 20),
-                          Text(
-                            'Total Amount: ${totalAmount.toStringAsFixed(2)}',
-                            style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      SizedBox(width: 20),
+                      Text(
+                        'Signature: ',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: 'Signature',
                           ),
-                          SizedBox(width: 20),
-                          Text(
-                            'Balance: ',
-                            style: TextStyle(fontSize: 18),
-                          ),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: TextField(
-                              controller: balanceController,
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                hintText: 'Balance',
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 20),
-                          Text(
-                            'Signature:                                  ',
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ],
+                        ),
                       ),
                     ],
                   )
@@ -187,10 +169,7 @@ class _CalculationPageState extends State<CalculationPage> {
                       SizedBox(height: 10),
                       Row(
                         children: [
-                          Text(
-                            'Balance: ',
-                            style: TextStyle(fontSize: 18),
-                          ),
+                          Text('Balance: '),
                           SizedBox(width: 10),
                           Expanded(
                             child: TextField(
@@ -206,49 +185,20 @@ class _CalculationPageState extends State<CalculationPage> {
                       SizedBox(height: 10),
                       Row(
                         children: [
-                          Text(
-                            'Signature: ',
-                            style: TextStyle(fontSize: 18),
+                          Text('Signature: '),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: TextField(
+                              decoration: InputDecoration(
+                                hintText: 'Signature',
+                              ),
+                            ),
                           ),
                         ],
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
-                Divider(height: 20, thickness: 2),
-                SizedBox(height: 20),
-                const Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly, // or MainAxisAlignment.spaceAround
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 10.0),
-                        child: Text(
-                          'Owner Name: Nabisab Mulla',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontFamily: 'Pacifico',
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
-                        child: Text(
-                          'Mob No: 7259610916',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontFamily: 'Pacifico',
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-
-
               ],
             ),
           ),
