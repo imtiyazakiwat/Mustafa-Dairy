@@ -40,7 +40,7 @@ class _CalculationPageState extends State<CalculationPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Calculation Page'),
+     title: Center(child: Text('Mulla Dairy')),   
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
