@@ -40,7 +40,7 @@ class _CalculationPageState extends State<CalculationPage> {
 
     return Scaffold(
       appBar: AppBar(
-     title: Center(child: Text('Mulla Dairy')),   
+        title: Center(child: Text('Mulla Dairy', style: TextStyle(fontSize: 36))), // Increased title size by 3 times
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,14 +49,15 @@ class _CalculationPageState extends State<CalculationPage> {
             padding: const EdgeInsets.all(16.0),
             child: Row(
               children: [
-                Text('Bill Date: '),
+                Text('Bill Date: ', style: TextStyle(fontSize: 24)), // Doubled the size of the text
                 TextButton(
                   onPressed: () {
                     _selectDate(context);
                   },
                   child: Text(selectedDate == null
                       ? 'Select Date'
-                      : '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}'),
+                      : '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}',
+                      style: TextStyle(fontSize: 24)), // Doubled the size of the text
                 ),
               ],
             ),
@@ -65,7 +66,7 @@ class _CalculationPageState extends State<CalculationPage> {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
               children: [
-                Text('Farmer Name: '),
+                Text('Farmer Name: ', style: TextStyle(fontSize: 24)), // Doubled the size of the text
                 Expanded(
                   child: TextField(
                     controller: farmerNameController,
@@ -213,7 +214,7 @@ class _CalculationPageState extends State<CalculationPage> {
       children: [
         Text(
           '$title',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold), // Increased font size by 3 times
         ),
         SizedBox(height: 10),
         Table(
