@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "727616627428",
+    "project_id": "mustafa-dairy",
+    "storage_bucket": "mustafa-dairy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:727616627428:android:8f3c88a96de85ddac342f1",
+        "android_client_info": {
+          "package_name": "com.example.mustafa_dairy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq7pOOLy2oiZsoDKikzqLNvbcc8fddk1g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
