@@ -378,16 +378,35 @@ class _CalculationPageState extends State<CalculationPage> {
   }
 
   double calcAmount(double fat, double snf) {
-    double s = 9.0;
-    double sp = (snf - s) * 10;
-
-    double sa = snf <= 9.0 ? sp * 0.50 : sp * 0.05;
-
-    double f = 6.5;
-    double fp = (fat - f) * 10;
-    double fa = fat <= 6.5 ? fp * 0.50 : fp * 0.60;
-
-    double amount = sa + fa + 52.50;
-    return amount;
+  double baseRate = 23.0;
+  
+  // Calculate FAT hike
+  double fatHike = 0.0;
+  if (fat <= 6.0) {
+    fatHike = List.generate((fat - 5.0).floor() * 10, (i) => 1.5 - 0.1 * i).fold(0, (a, b) => a + b);
+  } else if (fat <= 6.5) {
+    fatHike = 10.5 + (fat - 6.0) * 5.0;
+  } else {
+    fatHike = 10.5 + 2.5 + (fat - 6.5) * 3.0;
   }
+
+  // Calculate SNF hike
+  double snfHike = 0.0;
+  if (snf <= 8.5) {
+    snfHike = (snf - 7.5) * 10.0;
+  } else if (snf <= 9.0) {
+    snfHike = 10.0 + List.generate((snf - 8.5).floor() * 10, (i) => 0.9 - 0.1 * i).fold(0, (a, b) => a + b);
+  } else if (snf <= 9.4) {
+    snfHike = 10.0 + 3.5;
+    if (fat > 5.5) {
+      snfHike += 0.1 * (snf - 9.0) * 10;
+    }
+  } else {
+    snfHike = 10.0 + 3.5 + (snf - 9.0) * 1.0;
+  }
+
+  // Calculate final amount
+  double amount = baseRate + fatHike + snfHike;
+  return amount;
+}
 }
